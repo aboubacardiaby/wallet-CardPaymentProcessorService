@@ -20,10 +20,4 @@ COPY --from=build /app/publish .
 # Use built-in non-root user (included in .NET 8+ images)
 USER $APP_UID
 
-# Cloud Run uses PORT environment variable
-ENV ASPNETCORE_URLS=http://+:8080
-EXPOSE 8080
-
-# Note: Health checks are handled by Cloud Run, not Docker HEALTHCHECK
-
 ENTRYPOINT ["dotnet", "CardPaymentProcessorService.dll"]
