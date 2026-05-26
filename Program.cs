@@ -9,7 +9,7 @@ using Polly.Extensions.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuration
+// Configuration --
 builder.Services.Configure<PaymentApiSettings>(
     builder.Configuration.GetSection(PaymentApiSettings.SectionName));
 

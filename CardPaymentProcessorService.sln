@@ -1,9 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11408.102 d18.0
+VisualStudioVersion = 18.2.11408.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPaymentProcessorService", "CardPaymentProcessorService.csproj", "{4365B231-1471-F93B-9B1C-4BC0A2E97247}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{323E7A6C-42B9-4DE8-BE67-1586639D8434}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C6D25B20-868F-4F14-A47E-0218B70C5BB3}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\deploy-cloud-run.yml = .github\workflows\deploy-cloud-run.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +25,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C6D25B20-868F-4F14-A47E-0218B70C5BB3} = {323E7A6C-42B9-4DE8-BE67-1586639D8434}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {031D431D-3CD9-4BF7-9DCA-EC1F352F767A}
