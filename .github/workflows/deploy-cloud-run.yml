@@ -58,26 +58,21 @@ jobs:
           docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
           docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:latest
 
-      - name: Deploy to Cloud Run
+      - name: Deploy to Cloud Run Jobs
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v2
-        with:
-          service: ${{ env.SERVICE_NAME }}
-          region: ${{ env.REGION }}
-          image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
-          flags: |
-            --port=8080
-            --memory=512Mi
-            --cpu=1
-            --min-instances=0
-            --max-instances=10
-            --concurrency=80
-          env_vars: |
-            ASPNETCORE_ENVIRONMENT=Production
-          secrets: |
-            PaymentApi__BaseUrl=payment-api-base-url:latest
-            Stripe__WebhookSecret=stripe-webhook-secret:latest
-
-      - name: Show deployment URL
         run: |
-          echo "Service deployed to: ${{ steps.deploy.outputs.url }}"
+          gcloud run jobs deploy ${{ env.SERVICE_NAME }} \
+            --image=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.sha }} \
+            --region=${{ env.REGION }} \
+            --memory=512Mi \
+            --cpu=1 \
+            --max-retries=3 \
+            --task-timeout=3600s \
+            --set-env-vars="ASPNETCORE_ENVIRONMENT=Production" \
+            --set-secrets="PaymentApi__BaseUrl=payment-api-base-url:latest,Stripe__WebhookSecret=stripe-webhook-secret:latest" \
+            --labels="managed-by=github-actions,commit-sha=${{ github.sha }}"
+
+      - name: Show job info
+        run: |
+          echo "Job deployed: ${{ env.SERVICE_NAME }}"
+          echo "Run with: gcloud run jobs execute ${{ env.SERVICE_NAME }} --region=${{ env.REGION }}"
