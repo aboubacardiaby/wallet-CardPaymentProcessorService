@@ -15,7 +15,7 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: ${{ vars.GCP_REGION || 'us-central1' }}
   SERVICE_NAME: card-payment-processor
-  REPOSITORY: cloud-run-builds
+  REPOSITORY: cardpaymentprocessorservice
 
 jobs:
   build-and-deploy:
