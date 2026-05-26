@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<PaymentApiSettings>(
     builder.Configuration.GetSection(PaymentApiSettings.SectionName));
 
-// HTTP Client with retry policy
+// HTTP Client with retry policy--
 builder.Services.AddHttpClient<IPaymentApiClient, PaymentApiClient>((sp, client) =>
 {
     var settings = sp.GetRequiredService<IOptions<PaymentApiSettings>>().Value;
